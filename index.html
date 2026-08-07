@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#08111f">
+<title>Life Masterboard</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+<header class="top">
+  <div>
+    <div class="eyebrow">LIFE MASTERBOARD</div>
+    <h1>My Dashboard</h1>
+    <div class="muted" id="todayLabel"></div>
+  </div>
+  <div class="master-score"><span>Today</span><strong id="masterScore">0%</strong></div>
+</header>
+
+<section class="top-metrics">
+  <article><span>🔥 Streak</span><strong id="streakTop">0 days</strong></article>
+  <article><span>⚖️ Weight</span><strong id="weightTop">169 → 159</strong></article>
+  <article><span>💰 Available</span><strong id="moneyTop">$0</strong></article>
+</section>
+
+<main>
+<!-- HOME -->
+<section class="page active" id="pageHome">
+  <div class="card">
+    <div class="section-head"><h2>Today at a glance</h2><span class="pill" id="challengeDay">Day 1 / 100</span></div>
+    <div class="glance-grid">
+      <div><span>Calories</span><strong id="homeCalories">0 / 2200</strong><div class="mini-bar"><i id="calBar"></i></div></div>
+      <div><span>Protein</span><strong id="homeProtein">0 / 160g</strong><div class="mini-bar"><i id="proteinBar"></i></div></div>
+      <div><span>Water</span><strong id="homeWater">0 / 4L</strong><div class="mini-bar"><i id="waterBar"></i></div></div>
+      <div><span>Steps</span><strong id="homeSteps">0 / 8k</strong><div class="mini-bar"><i id="stepsBar"></i></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-head"><h2>Macros today</h2><button class="ghost go-tab" data-tab="Meals">Add food</button></div>
+    <div class="macro-strip">
+      <div><span>Protein</span><b id="hp">0g</b></div>
+      <div><span>Carbs</span><b id="hc">0g</b></div>
+      <div><span>Fat</span><b id="hf">0g</b></div>
+      <div><span>Fiber</span><b id="hfi">0g</b></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-head"><h2>100-Day Tracker</h2><button class="ghost go-tab" data-tab="Life">Open</button></div>
+    <div class="summary-list">
+      <div><span>Workout</span><strong id="homeWorkout">—</strong></div>
+      <div><span>Sleep</span><strong id="homeSleep">—</strong></div>
+      <div><span>Study</span><strong id="homeStudy">—</strong></div>
+      <div><span>Daily Score</span><strong id="homeLifeScore">0%</strong></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-head"><h2>Money</h2><button class="ghost go-tab" data-tab="Money">Open</button></div>
+    <div class="summary-list">
+      <div><span>Total Income</span><strong id="homeIncome">$0</strong></div>
+      <div><span>Total Spent</span><strong id="homeSpent">$0</strong></div>
+      <div><span>Available</span><strong id="homeAvailable">$0</strong></div>
+      <div><span>Next Paycheck</span><strong id="homeNextPay">Aug 12</strong></div>
+    </div>
+  </div>
+</section>
+
+<!-- MEALS -->
+<section class="page" id="pageMeals">
+  <div class="card">
+    <div class="section-head">
+      <div><div class="eyebrow">MEAL & MACRO TRACKER</div><h2>Today’s nutrition</h2></div>
+      <input class="date-small" id="mealDate" type="date">
+    </div>
+    <div class="macro-hero">
+      <div><span>Calories</span><strong id="mCal">0</strong><small>/ 2100–2200</small></div>
+      <div><span>Protein</span><strong id="mProt">0g</strong><small>/ 160g+</small></div>
+    </div>
+    <div class="macro-strip four">
+      <div><span>Carbs</span><b id="mCarbs">0g</b></div>
+      <div><span>Fat</span><b id="mFat">0g</b></div>
+      <div><span>Fiber</span><b id="mFiber">0g</b></div>
+      <div><span>Remaining</span><b id="mRemain">2200</b></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-head"><h2>Quick meals</h2><span class="muted">Tap to add</span></div>
+    <div class="quick-meals">
+      <button data-meal="breakfast">🥣 Breakfast</button>
+      <button data-meal="snack">🫐 Yogurt Snack</button>
+      <button data-meal="lunch">🍗 Lunch Pulao</button>
+      <button data-meal="dinner">🍚 Dinner Pulao</button>
+      <button data-meal="preworkout">🍌 Pre Workout</button>
+      <button data-meal="bed">🌙 Before Bed</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-head"><h2>Add Food</h2><span class="muted">Auto-calculates macros</span></div>
+    <label>Food
+      <select id="foodSelect"></select>
+    </label>
+    <div class="two-col">
+      <label>Quantity<input id="foodQty" type="number" step="0.1"></label>
+      <label>Meal
+        <select id="mealType">
+          <option>Breakfast</option><option>Snack</option><option>Lunch</option><option>Dinner</option><option>Pre Workout</option><option>Before Bed</option><option>Other</option>
+        </select>
+      </label>
+    </div>
+    <div id="foodPreview" class="food-preview"></div>
+    <button class="primary" id="addFoodBtn">Add Food</button>
+  </div>
+
+  <div class="card">
+    <div class="section-head"><h2>Add Custom / Manual Food</h2><span class="muted">For anything not saved</span></div>
+    <label>Name<input id="customName" type="text" placeholder="Example: Egg curry"></label>
+    <div class="macro-input-grid">
+      <label>Calories<input id="customCal" type="number" step="0.1"></label>
+      <label>Protein g<input id="customProt" type="number" step="0.1"></label>
+      <label>Carbs g<input id="customCarbs" type="number" step="0.1"></label>
+      <label>Fat g<input id="customFat" type="number" step="0.1"></label>
+      <label>Fiber g<input id="customFiber" type="number" step="0.1"></label>
+    </div>
+    <label>Meal
+      <select id="customMeal">
+        <option>Breakfast</option><option>Snack</option><option>Lunch</option><option>Dinner</option><option>Pre Workout</option><option>Before Bed</option><option>Other</option>
+      </select>
+    </label>
+    <button class="secondary" id="addCustomBtn">Add Manual Food</button>
+  </div>
+
+  <div class="card">
+    <div class="section-head"><h2>Today’s food log</h2><button class="danger-outline" id="clearMealDay">Clear Day</button></div>
+    <div id="foodLog"></div>
+  </div>
+</section>
+
+<!-- LIFE -->
+<section class="page" id="pageLife">
+  <div class="card">
+    <div class="section-head"><div><div class="eyebrow">100 DAY TRACKER</div><h2 id="lifeDateTitle">Today</h2></div><input class="date-small" id="lifeDate" type="date"></div>
+    <div class="macro-strip four">
+      <div><span>Score</span><b id="lifeScore">0%</b></div>
+      <div><span>Weight</span><b id="lifeWeight">—</b></div>
+      <div><span>Workout</span><b id="lifeWorkout">—</b></div>
+      <div><span>Study</span><b id="lifeStudy">—</b></div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>Daily details</h2>
+    <div id="lifeDetails" class="detail-grid"></div>
+  </div>
+  <div class="card">
+    <h2>Saved days</h2>
+    <div id="lifeHistory"></div>
+  </div>
+</section>
+
+<!-- MONEY -->
+<section class="page" id="pageMoney">
+  <div class="card">
+    <div class="section-head"><div><div class="eyebrow">PERSONAL FINANCE</div><h2>Money Dashboard</h2></div><span class="pill" id="nextPayPill">Next Pay</span></div>
+    <div class="money-hero">
+      <div><span>Income</span><strong id="moneyIncome">$0</strong></div>
+      <div><span>Spent</span><strong id="moneySpent">$0</strong></div>
+      <div><span>Available</span><strong id="moneyAvailable">$0</strong></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="section-head"><h2>Add transaction</h2><span class="muted">Nothing is deducted automatically</span></div>
+    <div class="segmented">
+      <button class="moneyType active" data-type="expense">Expense</button>
+      <button class="moneyType" data-type="income">Income</button>
+    </div>
+    <label>Amount<input id="moneyAmount" type="number" step="0.01" placeholder="0.00"></label>
+    <div class="two-col">
+      <label>Date<input id="moneyDate" type="date"></label>
+      <label>Category
+        <select id="moneyCategory">
+          <option>Rent</option><option>Phone</option><option>Internet</option><option>Groceries</option><option>Utilities</option>
+          <option>Car Gas</option><option>Gym</option><option>Subscriptions</option><option>Credit Cards</option><option>Personal</option>
+          <option>Paycheck</option><option>Other</option>
+        </select>
+      </label>
+    </div>
+    <label>Note<input id="moneyNote" type="text" placeholder="Optional"></label>
+    <button class="primary" id="saveMoneyTx">Save Transaction</button>
+  </div>
+  <div class="card">
+    <div class="section-head"><h2>Paychecks</h2><span class="muted">$2,800 biweekly</span></div>
+    <div id="paycheckList"></div>
+  </div>
+  <div class="card">
+    <h2>Recent transactions</h2>
+    <div id="moneyHistory"></div>
+  </div>
+</section>
+
+<!-- HISTORY -->
+<section class="page" id="pageHistory">
+  <div class="card">
+    <div class="eyebrow">MASTER HISTORY</div>
+    <h2>Daily timeline</h2>
+    <div class="muted">Nutrition + 100-day activity together</div>
+    <div id="masterHistory"></div>
+  </div>
+</section>
+</main>
+
+<div id="toast" class="toast">Saved</div>
+
+<nav class="bottom-nav">
+  <button class="nav active" data-tab="Home">Home</button>
+  <button class="nav" data-tab="Meals">Meals</button>
+  <button class="nav" data-tab="Life">100 Days</button>
+  <button class="nav" data-tab="Money">Money</button>
+  <button class="nav" data-tab="History">History</button>
+</nav>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
